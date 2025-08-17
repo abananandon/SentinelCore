@@ -1,0 +1,17 @@
+# Compiled object files
+*.o
+*.obj 
+
+# Executables
+*.exe 
+*.out 
+*test_app
+
+# Build directories
+build/
+bin/
+
+# Editor/IDE config files
+.vscode/
+*.swp 
+
