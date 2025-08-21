@@ -1,8 +1,5 @@
-#include "mqtt_client.h"
-#include "MQTTClient.h"
-#include <MQTTClientPersistence.h>
-#include <bits/pthreadtypes.h>
-#include <math.h>
+#include "modules/mqtt_client.h"
+#include <MQTTClient.h>
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>

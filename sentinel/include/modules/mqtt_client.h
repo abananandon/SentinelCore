@@ -1,7 +1,6 @@
 #ifndef _MQTT_CLIENT_H
 #define _MQTT_CLIENT_H
 
-#include <bits/pthreadtypes.h>
 #include <pthread.h>
 #include <stdbool.h> // for size_t
 #include <stddef.h>  // for bool
@@ -70,23 +69,34 @@ typedef struct {
   int lwtQos;
 } mqttClientContext_t;
 
+/* 初始化MQTT客户端上下文和配置 */
 int mqttClient_Init(mqttClientContext_t *ctx, const mqttClientConfig_t *config);
 
+/* 注册收到控制命令的回调函数 */
 void mqttClient_RegisterCommandCallback(mqttClientContext_t *ctx,
                                         mqttOnCommandCallback_t callback,
                                         void *userData);
 
+/* 注册连接状态变化的回调函数 */
 void mqttClient_RegisterConnectionStatusCallback(
     mqttClientContext_t *ctx, mqttOnConnectionStatusCallback_t callback,
     void *userData);
+
+/* 设置遗嘱消息（LWT） */
 void mqttClient_SetLWT(mqttClientContext_t *ctx, const char *topic,
                        const char *payload, int qos);
 
+/* 启动MQTT客户端和后台处理进程 */
 void mqttClient_Start(mqttClientContext_t *ctx);
+
+/* 停止MQTT客户端连接并清理资源 */
 void mqttClient_Stop(mqttClientContext_t *ctx);
+
+/* 发布MQTT消息 */
 int mqttClient_Publish(mqttClientContext_t *ctx, const char *topic,
                        const char *payload, int payloadLen, int qos,
                        bool retained);
 
+/* 订阅MQTT Topic */
 int mqttClient_Subscribe(mqttClientContext_t *ctx, const char *topic, int qos);
 #endif // !_MQTT_CLIENT_H
