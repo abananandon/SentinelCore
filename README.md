@@ -9,9 +9,13 @@
 # 目前实现的功能
 ## 1. 设备信息监控模块-采集设备状态
 通过读取内核的数据，来获取当前CPU的温度、负载以及系统的内存使用情况。
+<img width="2539" height="1162" alt="image" src="https://github.com/user-attachments/assets/e17e8309-2f92-4be5-80ab-3a5dc0c22f2c" />
+
 
 ## 2. 环境光传感器模块-采集环境光信息 
 环境光传感器型号为 AP3216C ，使用 I2C 接口与 IMX6ULL 进行通信，能够实现环境光强度（ALS）检测、接近距离（PS）检测和红外线强度（IR）检测。
+<img width="2539" height="1162" alt="image" src="https://github.com/user-attachments/assets/918ffe2f-34d5-48f2-ad26-f2996c7041b9" />
+
 
 ## 3. 采集设备MQTT客户端-与Broker进行通信，发布和订阅Topic
 这是本项目的核心，客户端将采集到的数据作为一个Tpoic发布到云服务器Broker，同时从云服务器Broker订阅控制命令Topic，来实现数据上传广播与远程控制功能。
