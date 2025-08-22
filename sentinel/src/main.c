@@ -10,6 +10,7 @@
 #include "modules/light_sensor.h"
 #include "modules/mqtt_client.h"
 
+// MQTT客户端设置
 #define my_BrokerAddress "tcp://47.97.69.180:1883"
 #define my_ClienID "ATK-IMX6U-01"
 #define my_reconnectDelaySec 5
@@ -50,7 +51,8 @@ void signalHandle(int signum) {
 // 设备状态采集和发送线程
 void *deviceStatusThreadFunc(void *arg) {
   while (!g_exitFlag) {
-    usleep(10000);
+    sleep(1);
+    // usleep(1000 * 10); // 数据刷新率：100Hz
 
     // 检查MQTT是否连接
     if (!g_mqttContex.isConnected) {
@@ -66,7 +68,7 @@ void *deviceStatusThreadFunc(void *arg) {
     // 设置消息载荷
     char deviceStatusPaylod[256];
     snprintf(deviceStatusPaylod, sizeof(deviceStatusPaylod),
-             "{\"timestamp_ms\": %ld,\"cup_load\": %lf,\"cpu_temp_c\": "
+             "{\"timestamp_ms\": %ld,\"cpu_temp_c\": %lf,\"cpu_load\": "
              "%f,\"mem_usage_percent\": %f}",
              (long)time(NULL), cpuTemp, cpuLoad, memUsage);
 
@@ -92,7 +94,8 @@ void *lightSensorThreadFunc(void *arg) {
   char *sensorType = "light_sensor";
 
   while (!g_exitFlag) {
-    usleep(5000);
+    sleep(1);
+    // usleep(1000 * 1000);
 
     // 检查MQTT是否连接
     if (!g_mqttContex.isConnected) {
@@ -123,9 +126,8 @@ void *lightSensorThreadFunc(void *arg) {
     if (rc != 0) {
       fprintf(stderr, "Fialed to publish light senser data.\n");
     }
-
-    return NULL;
   }
+  return NULL;
 }
 
 int main(int argc, char *argv[]) {
