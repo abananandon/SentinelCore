@@ -8,7 +8,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(sentinel_app "") # 源文件在下面添加
 
 # 关键一步：添加全局的头文件包含路径 - 适合你项目自身的头文件
-target_include_directories(sentinel_app PUBLIC "${PROJECT_SOURCE_DIR}/sentinel/include/")
+target_include_directories(sentinel_app PUBLIC "${PROJECT_SOURCE_DIR}/sentinel/include/"
+  PUBLIC "${PROJECT_SOURCE_DIR}/sentinel/src/third_party")
 
 # 查找 Paho MQTT C 库
 # Paho 库通常命名为 paho-mqtt3c (标准) 或 paho-mqtt3cs (带 SSL)
@@ -24,18 +25,18 @@ find_path(PAHO_MQTT_C_INCLUDE_DIR NAMES MQTTClient.h
 
 # 检查是否找到库
 if (NOT PAHO_MQTT_C_LIBRARY)
-    message(FATAL_ERROR "Paho MQTT C library not found. Please check its installation in your sysroot: ${CMAKE_SYSROOT}")
+  message(FATAL_ERROR "Paho MQTT C library not found. Please check its installation in your sysroot: ${CMAKE_SYSROOT}")
 endif()
 
 # 如果找到了 Paho 头文件路径，添加到包含路径 (可选，但推荐为了避免万一查找不到)
 if (PAHO_MQTT_C_INCLUDE_DIR)
-    target_include_directories(sentinel_app PRIVATE ${PAHO_MQTT_C_INCLUDE_DIR})
+  target_include_directories(sentinel_app PRIVATE ${PAHO_MQTT_C_INCLUDE_DIR})
 endif()
 
 # 使用 GLOB_RECURSE 自动查找所有 .c 源文件并添加到可执行文件
 file(GLOB_RECURSE SOURCES "sentinel/src/*.c")
 # 添加宏定义以确保 pthread 相关功能可用，解决可能的警告或编译问题
-target_compile_definitions(sentinel_app PRIVATE -D_POSIX_SOURCE -D_GNU_SOURCE) 
+target_compile_definitions(sentinel_app PRIVATE -D_POSIX_SOURCE -D_GNU_SOURCE)
 
 target_sources(sentinel_app PRIVATE ${SOURCES})
 
