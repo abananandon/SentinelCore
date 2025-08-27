@@ -11,6 +11,10 @@
 build/
 bin/
 
+# Self config directories
+**/config/
+
+
 # Editor/IDE config files
 .vscode/
 *.swp 
