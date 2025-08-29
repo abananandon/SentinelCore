@@ -1,6 +1,12 @@
 {
-  "mqtt":{
-    "brokerAddress":"tcp://xxxxxxxx:1883",
-    "clientID":"ATK-IMX6U-01"
+
+  "mqttClientConfig":{
+    "brokerAddress":"tcp://47.97.69.180:1883",
+    "clientID":"ATK-IMX6U-01",
+    "username":"ATK-IMX6U-01",
+    "password":"123456",
+    "reconnectDelaySec":5,
+    "keepAliveInterval":60,
+    "maxReconnectAttempts":99
   }
 }
