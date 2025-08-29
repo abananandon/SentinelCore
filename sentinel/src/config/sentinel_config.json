@@ -1,4 +1,5 @@
 {
+
   "mqttClientConfig":{
     "brokerAddress":"tcp://47.97.69.180:1883",
     "clientID":"ATK-IMX6U-01",
